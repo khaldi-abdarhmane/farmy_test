@@ -1,4 +1,4 @@
-# project Structure :
+# Project Structure :
 
 * **.github/workflows**: CI/CD workflows
 * **data:**
