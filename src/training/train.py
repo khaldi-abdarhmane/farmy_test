@@ -23,6 +23,7 @@ from sklearn.metrics import confusion_matrix,classification_report
 import seaborn as sn
 import random
 import matplotlib.cm as cm
+import mlflow
 
 def string_to_tuple(txt):
     txt=txt.replace("(", "")
@@ -77,12 +78,17 @@ def train( train_path= 'small_dataset/train', validation_path= 'small_dataset/va
   model.compile(optimizer=optimizers.SGD(learning_rate, momentum), loss= loss, metrics= metrics )
 
 
+ 
 
   # Train the model
   history=model.fit(train_generator,
           epochs=nbr_epochs,
           validation_data=validation_generator
   )
+  
+  with mlflow.start_run():
+    mlflow.log_params({"learning_rate": learning_rate})
+
 
 if __name__ == '__main__':
 
@@ -103,7 +109,7 @@ if __name__ == '__main__':
   nbr_epochs =train_args["nbr_epochs"] 
 
 
-    
+  
   train(train_path , validation_path , batch_size , image_size , learning_rate , momentum  , loss  , metrics ,nbr_epochs)
 
 
