@@ -1,0 +1,33 @@
+{
+    "training":
+    {
+        "train_path": "../../data/small_dataset/train", 
+        "validation_path": "../../data/small_dataset/val",
+        "batch_size": 10,
+        "image_size": "(224, 224)",
+        "learning_rate": 1e-3, 
+        "momentum":0.9, 
+        "loss": "categorical_crossentropy", 
+        "metrics" : ["accuracy"],
+        "nbr_epochs": 1
+    },
+    
+
+    
+    "evaluation":
+    {
+        "validation_path": "small_dataset/val",
+        "batch_size": 10,
+        "image_size": "(224, 224)",
+        "model_path" : "my_model.h5"
+       
+    },
+
+
+    "predict":
+    {
+      "target_dir"  : "my_model.h5",
+      "image_path"  :"small_dataset/val/Apple___Apple_scab/8df36a92-b562-4bff-975b-ff08d8da40f6___FREC_Scab 3119.JPG"
+        
+    }
+}
