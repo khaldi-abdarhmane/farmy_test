@@ -2,9 +2,8 @@ import yaml
 from params import Params
 def params_fct():
     import os
-    #os.chdir("./src/train/params.yaml")
-    print("-----> path of: ",os.getcwd())
-    print("-----> path list dir: ",os.listdir())
+ 
+ 
 
     #params = yaml.safe_load(open("./../../params.yaml"))["train"]
     params = yaml.safe_load(open("./params.yaml"))["train"]
@@ -18,6 +17,7 @@ def params_fct():
     rescale_p=params.get('rescale')
     image_size_p=params.get('image_size')
     batch_size_p=params.get('batch_size')
+    print(params)# for test
       
     params=Params(                 rescale=rescale_p,
                                    image_size=image_size_p,
@@ -33,5 +33,7 @@ def params_fct():
                                    input_shape_str=input_shape_p_str
                    )
     return params
-    
+
+
+     
     
