@@ -1,0 +1,42 @@
+stages:
+  exploratory:
+    cmd: python src/exploratory/exploratory.py data/small_dataset/train/ data/small_dataset/val/ exploratory/exploratory_img/plot
+    deps:
+    - data/small_dataset/train/
+    - data/small_dataset/val/
+    - src/exploratory/exploratory.py
+    outs:
+    - exploratory/exploratory_img/plottrain.png
+    - exploratory/exploratory_img/plotvalid.png
+  train:
+    cmd: python src/train/train.py data/small_dataset/train/ data/small_dataset/val/ train/model/model2.h5 train/history/history.csv
+    deps:
+    - data/small_dataset/train/
+    - data/small_dataset/val/
+    - exploratory/exploratory_img/plottrain.png
+    - exploratory/exploratory_img/plotvalid.png
+    
+    params:
+    - train.batch_size
+    - train.learning_rate
+    - train.momentum
+    - train.nbr_epoch
+    outs:
+    - train/model/model2.h5
+    - train/history/history.csv
+
+
+  evaluate:
+    cmd: python src/evaluate/evaluate.py train/model/model2.h5 train/history/history.csv data/small_dataset/val/ evaluate/evaluate_csv/classification_report.csv data/small_dataset/train/ evaluate/evaluate_csv/confusion_matrix.csv evaluate/evaluate_plt/confusion_matrix_img.png evaluate/evaluate_plt/observing_accuracy_img.png
+    deps:
+    - train/history/history.csv
+    - train/model/model2.h5
+    - data/small_dataset/train
+    - data/small_dataset/val
+    - data/small_dataset/train/
+    - src/evaluate/evaluate.py
+    outs:
+    - evaluate/evaluate_csv/classification_report.csv
+    - evaluate/evaluate_csv/confusion_matrix.csv 
+    - evaluate/evaluate_plt/confusion_matrix_img.png 
+    - evaluate/evaluate_plt/observing_accuracy_img.png
