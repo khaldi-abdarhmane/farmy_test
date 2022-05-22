@@ -1,2 +1,4 @@
 /ml_pipelines/plant_disease_pipeline/data/
 /ml_pipelines/plant_disease_pipeline/train/model/model2.h5
+/ml_pipelines/plant_disease_pipeline/train/history/history.csv
+/ml_pipelines/plant_disease_pipeline/mlruns
