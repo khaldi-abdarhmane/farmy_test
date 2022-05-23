@@ -60,6 +60,7 @@ with mlflow.start_run() as run:
     history=model_.fit(generatorobjet.train_generator,
                    epochs= params.nbr_epoch,
                    validation_data=generatorobjet.validation_generator)
+    model_.save(os.path.join(output_model))
 
     mlflow.log_params(params_dict)
     mlflow.keras.save_model(model_,os.path.join(experiment_artifact_path,"model_artifacts"))
