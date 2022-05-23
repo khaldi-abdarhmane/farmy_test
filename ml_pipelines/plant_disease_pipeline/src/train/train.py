@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 import tensorflow as tf
 from params_fct import params_fct
 print(tf.__version__)
@@ -12,7 +13,7 @@ from generator import generator
 import os
 import pandas as pd
 import mlflow
-import mlflow.tensorflow
+import mlflow.keras
 
 
 
@@ -21,7 +22,7 @@ params =params_fct()
 params_dict= yaml.safe_load(open("./params.yaml"))["train"]
 print("[params]:",params)
 print("[params_dict]:",params_dict)
-
+upload_artifact=True
 
 if len(sys.argv) != 5:
     sys.stderr.write("Arguments error. Usage:\n")
@@ -32,6 +33,7 @@ train_path = sys.argv[1]
 validation_path = sys.argv[2]
 output_model = sys.argv[3]
 output_history= sys.argv[4]
+artifact_path="../../results" # stock temporary the artifact of the experiments
 
 
 generatorobjet=generator(rescale=params.rescale,
@@ -48,26 +50,32 @@ arch_model=Arch_model(base_model= base_model_1,class_number=generatorobjet.class
 model_=arch_model.model
 model_.compile(optimizer=params.optimizer, loss=params.loss, metrics= params.metrics )
 
-# setup mlflow tracking
-mlflow.set_tracking_uri("http://ec2-54-234-36-95.compute-1.amazonaws.com:8080")
-mlflow.set_experiment("ml_pipeline")
+mlflow.set_tracking_uri("http://ec2-3-92-52-215.compute-1.amazonaws.com:8080/")
+mlflow.set_experiment("23may")
 
-print(output_model)
+print("[ output model ]\n",output_model)
 with mlflow.start_run() as run:
-    
+    experiment_artifact_path=os.path.join(artifact_path, run.info.run_id)
+
     history=model_.fit(generatorobjet.train_generator,
                    epochs= params.nbr_epoch,
                    validation_data=generatorobjet.validation_generator)
-    model_.save(os.path.join(output_model))
 
     mlflow.log_params(params_dict)
-    mlflow.log_metric("mse",0.99)
-    mlflow.tensorflow.log_model(model_)
-# target_dir = '/home/khaldi-user/Desktop/piplean/data/model'
+    mlflow.keras.save_model(model_,os.path.join(experiment_artifact_path,"model_artifacts"))
+    
+    if upload_artifact:# upload artifact to mlflow
+        mlflow.log_artifacts(experiment_artifact_path)
+
+    print("----mlflow.get_artifact_uri() : ",mlflow.get_artifact_uri())
+    history_df = pd.DataFrame(history.history)
+    history_df.to_csv(os.path.join(experiment_artifact_path,"history.csv" ),index=False)
+    
+    import os
+    print("-- current folder ---",os.getcwd())
 
 
 
-#history_df = pd.DataFrame(history.history)
-#history_df.to_csv(os.path.join(output_history),index=False)
+
 
 
