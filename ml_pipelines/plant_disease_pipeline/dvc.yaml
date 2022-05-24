@@ -1,0 +1,38 @@
+stages:
+  # exploratory:
+  #   cmd: python ./../../src/exploratory.py ./../../data/small_dataset/train/ ./../../data/small_dataset/val/ ./../../results/exploratory/exploratory_img/plot
+  #   deps:
+  #   - ./../../data/small_dataset/train/
+  #   - ./../../data/small_dataset/val/
+  #   - ./../../src/exploratory.py
+  #   outs:
+  #   - ./../../results/exploratory/exploratory_img/plottrain.png
+  #   - ./../../results/exploratory/exploratory_img/plotvalid.png
+  train:
+    cmd: python ./../../src/train.py ./../../data/small_dataset/train/ ./../../data/small_dataset/val/ ./../../results/training/model2.h5 ./../../results/training/history/history.csv
+    deps:
+    - ./../../data/small_dataset/train/
+    - ./../../data/small_dataset/val/    
+    params:
+    - train.batch_size
+    - train.learning_rate
+    - train.momentum
+    - train.nbr_epoch
+    outs:
+    - ./../../results/training/model2.h5
+    - ./../../results/training/history/history.csv
+
+
+  # evaluate:
+  #   cmd: python ./../../src/evaluate.py ./../../results/training/model2.h5 ./../../results/training/history.csv ./../../data/small_dataset/val/ ./../../results/evaluate/evaluate_csv/classification_report.csv ./../../data/small_dataset/train/ ./../../results/evaluate/evaluate_csv/confusion_matrix.csv ./../../results/evaluate/evaluate_plt/confusion_matrix_img.png ./../../results/evaluate/evaluate_plt/observing_accuracy_img.png
+  #   deps:
+  #   - ./../../results/training/model2.h5
+  #   - ./../../results/training/history.csv
+  #   - ./../../data/small_dataset/train
+  #   - ./../../data/small_dataset/val
+  #   - ./../../src/evaluate/evaluate.py
+  #   outs:
+  #    - ./../../results/evaluate/evaluate_csv/classification_report.csv
+  #    - ./../../data/small_dataset/train/ ./../../results/evaluate/evaluate_csv/confusion_matrix.csv
+  #    - ./../../results/evaluate/evaluate_plt/confusion_matrix_img.png 
+  #    - ./../../results/evaluate/evaluate_plt/observing_accuracy_img.png
