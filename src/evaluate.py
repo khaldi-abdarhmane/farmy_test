@@ -1,12 +1,12 @@
 from utils.Loadingmodel_data import modelLoad,historyLoad 
 import sys
-from evaluatee.observing_accuracy import observing_accuracy
-from evaluatee.classification_report import classification_report_fct
+from utils.evaluate.observing_accuracy import observing_accuracy
+from utils.evaluate.classification_report import classification_report_fct
 
 from utils.generator import generator
 
 from utils.params_fct import params_fct
-from evaluatee.confusion_matrix_plt import confusion_matrix_plt
+from utils.evaluate.confusion_matrix_plt import confusion_matrix_plt
 if len(sys.argv) != 9:
     sys.stderr.write("Arguments error. Usage:\n")
     sys.stderr.write("\tpython train.py features model\n")

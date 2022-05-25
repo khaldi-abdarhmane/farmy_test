@@ -9,7 +9,7 @@ import sys
 import yaml
 from utils.params import Params
 
-from trainn.arch_model import Arch_model
+from utils.train.arch_model import Arch_model
 
 from utils.generator import generator
 import os
@@ -35,7 +35,7 @@ train_path = sys.argv[1]
 validation_path = sys.argv[2]
 output_model = sys.argv[3]
 output_history= sys.argv[4]
-artifact_path="./results" # stock temporary the artifact of the experiments
+artifact_path="./../../results" # stock temporary the artifact of the experiments
 
 
 generatorobjet=generator(rescale=params.rescale,
