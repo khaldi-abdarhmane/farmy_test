@@ -17,7 +17,9 @@ import pandas as pd
 import mlflow
 import mlflow.keras
 
-
+from pathlib import Path
+# create results/training folder to stock training artifact
+Path("./../../results/training").mkdir(parents=True,exist_ok=True)
 
 
 params =params_fct()
@@ -36,7 +38,8 @@ validation_path = sys.argv[2]
 output_model = sys.argv[3]
 output_history= sys.argv[4]
 artifact_path="./../../results" # stock temporary the artifact of the experiments
-
+mlflow_server_url= "http://ec2-54-227-5-232.compute-1.amazonaws.com:8080/" # update this ip with the mlflow ; ec2 public address is dynamics
+experiment_name= "mlflow_dvc_pipeline"
 
 generatorobjet=generator(rescale=params.rescale,
                          image_size=params.image_size,
@@ -52,8 +55,8 @@ arch_model=Arch_model(base_model= base_model_1,class_number=generatorobjet.class
 model_=arch_model.model
 model_.compile(optimizer=params.optimizer, loss=params.loss, metrics= params.metrics )
 
-mlflow.set_tracking_uri("http://ec2-52-91-102-87.compute-1.amazonaws.com:8080/")
-mlflow.set_experiment("24may")
+mlflow.set_tracking_uri( mlflow_server_url)
+mlflow.set_experiment(experiment_name)
 
 print("[ output model ]\n",output_model)
 with mlflow.start_run() as run:
