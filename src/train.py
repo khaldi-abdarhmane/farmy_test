@@ -38,8 +38,8 @@ validation_path = sys.argv[2]
 output_model = sys.argv[3]
 output_history= sys.argv[4]
 artifact_path="./../../results" # stock temporary the artifact of the experiments
-mlflow_server_url= "http://ec2-54-227-5-232.compute-1.amazonaws.com:8080/" # update this ip with the mlflow ; ec2 public address is dynamics
-experiment_name= "mlflow_dvc_pipeline"
+mlflow_server_url= params_dict["mlflow_server_url"]# "http://ec2-54-163-48-30.compute-1.amazonaws.com:8080/" # update this ip with the mlflow ; ec2 public address is dynamics
+experiment_name=    params_dict["experiment_name"] #"mlflow_dvc_pipeline"
 
 generatorobjet=generator(rescale=params.rescale,
                          image_size=params.image_size,
@@ -70,17 +70,13 @@ with mlflow.start_run() as run:
     mlflow.log_params(params_dict)
     mlflow.keras.save_model(model_,os.path.join(experiment_artifact_path,"model_artifacts"))
     
-    # if upload_artifact:# upload artifact to mlflow
-    
+     
 
     print("----mlflow.get_artifact_uri() : ",mlflow.get_artifact_uri())
     history_df = pd.DataFrame(history.history)
     history_df.to_csv(os.path.join(experiment_artifact_path,"history.csv" ),index=False)
-    
     mlflow.log_artifacts(artifact_path)
-    import os
-    print("-- current folder ---",os.getcwd())
-
+  
 
 
 
