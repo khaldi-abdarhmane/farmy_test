@@ -12,4 +12,4 @@ train:
   momentum: 0.9
   nbr_epoch: 1
   mlflow_server_url:  "http://ec2-54-163-48-30.compute-1.amazonaws.com:8080/" 
-  experiment_name: "mlflow_dvc_pipeline"
+  experiment_name: "fix-esi-vm"

@@ -67,28 +67,27 @@ with mlflow.start_run() as run:
     print("----mlflow.get_artifact_uri() : ",mlflow.get_artifact_uri())
 
     
-    """history=model_.fit(generatorobjet.train_generator,
+    history=model_.fit(generatorobjet.train_generator,
                    epochs= params.nbr_epoch,
-                   validation_data=generatorobjet.validation_generator)"""
-    #history_df = pd.DataFrame(history.history)
-    history_df = pd.DataFrame(["test"])
-    history_df.to_csv(os.path.join(experiment_artifact_path,"history.csv" ),index=False)
+                   validation_data=generatorobjet.validation_generator)
+    history_df = pd.DataFrame(history.history)
+    history_path= os.path.join(experiment_artifact_path,"history.csv" )
+    history_df.to_csv(history_path ,index=False)
                  
-    #model_.save(os.path.join(output_model))
-
-    # temporary
+    model_.save(os.path.join(output_model))
+    """
+            # temporary
     from utils.Loadingmodel_data import modelLoad,historyLoad 
     model_=modelLoad("./../../results/training/model2.h5")
     #----
+    """
+
     if Path(model_artifact_path).exists():
         shutil.rmtree(model_artifact_path) # remove  model_artifact_path folder 
 
     mlflow.log_params(params_dict)
-   # mlflow.tensorflow.autolog(log_models=False)
-    mlflow.tensorflow.autolog()
-    #mlflow.keras.save_model(model_, model_artifact_path)
-    #mlflow.log_artifacts(artifact_path,artifact_path="/")
-    mlflow.keras.log_model(model_,"keras_plant_disease")
+    mlflow.log_artifact(history_path)
+    mlflow.keras.log_model(model_,"keras")
 
 
 
