@@ -2,15 +2,21 @@ from utils.Loadingmodel_data import modelLoad,historyLoad
 import sys
 from utils.evaluate.observing_accuracy import observing_accuracy
 from utils.evaluate.classification_report import classification_report_fct
-
 from utils.generator import generator
-
+from pathlib import Path
 from utils.params_fct import params_fct
 from utils.evaluate.confusion_matrix_plt import confusion_matrix_plt
+import mlflow
+
 if len(sys.argv) != 9:
     sys.stderr.write("Arguments error. Usage:\n")
     sys.stderr.write("\tpython train.py features model\n")
     sys.exit(1)
+
+# create results/evaluate folder to stock evaluate artifact
+Path("./../../results/evaluate/evaluate_plt/").mkdir(parents=True,exist_ok=True)
+Path("./../../results/evaluate/evaluate_csv/").mkdir(parents=True,exist_ok=True)
+
     
 model_path = sys.argv[1]
 history_df_path = sys.argv[2]
@@ -35,8 +41,22 @@ generatorobjet=generator(rescale=params.rescale,
                          train_path=train_path,
                          validation_path= validation_path
                         )
+
+ 
 observing_accuracy(df=df,savepath= observing_accuracy_path)
 classification_report_fct(validation_generator= generatorobjet.validation_generator,model=model,classification_report_path= output1,conf_matrix_path=output2)
 confusion_matrix_plt(conf_matrix_path=output2,output=output3)
+
+
+"""
+evaluation_artifact_path= "./../../results/evaluate/"
+load_last_run= "ca016b69505043218e0f0c498d65da6d" #mlflow.last_active_run()
+print("----load_last_run_ id =",load_last_run)
+
+with mlflow.start_run( run_id= load_last_run) as last_run: 
+    mlflow.log_artifacts(evaluation_artifact_path)
+
+"""
+
 
 
