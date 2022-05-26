@@ -22,6 +22,8 @@ import shutil
 from pathlib import Path
 # create results/training folder to stock training artifact
 Path("./../../results/training").mkdir(parents=True,exist_ok=True)
+Path("./../../results/training/history").mkdir(parents=True,exist_ok=True)
+
 
 
 params =params_fct()
@@ -71,7 +73,9 @@ with mlflow.start_run() as run:
                    epochs= params.nbr_epoch,
                    validation_data=generatorobjet.validation_generator)
     history_df = pd.DataFrame(history.history)
-    history_path= os.path.join(experiment_artifact_path,"history.csv" )
+#    history_df = pd.DataFrame(["hhh"])
+
+    history_path= os.path.join(experiment_artifact_path,"history/history.csv" )
     history_df.to_csv(history_path ,index=False)
                  
     model_.save(os.path.join(output_model))
