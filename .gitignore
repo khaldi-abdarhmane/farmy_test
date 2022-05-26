@@ -4,3 +4,4 @@
 /ml_pipelines/plant_disease_pipeline/mlruns
 /results
 /data
+/src/utils/__pycache__/ 
