@@ -16,6 +16,7 @@ import os
 import pandas as pd
 import mlflow
 import mlflow.keras
+import shutil
 
 from pathlib import Path
 # create results/training folder to stock training artifact
@@ -61,22 +62,23 @@ mlflow.set_experiment(experiment_name)
 print("[ output model ]\n",output_model)
 with mlflow.start_run() as run:
     experiment_artifact_path=os.path.join(artifact_path ,"training") ####
+    model_artifact_path=os.path.join(experiment_artifact_path,"model_artifacts")
 
+    
     history=model_.fit(generatorobjet.train_generator,
                    epochs= params.nbr_epoch,
                    validation_data=generatorobjet.validation_generator)
+                 
     model_.save(os.path.join(output_model))
-
     mlflow.log_params(params_dict)
-    mlflow.keras.save_model(model_,os.path.join(experiment_artifact_path,"model_artifacts"))
+    shutil.rmtree(model_artifact_path) # remove  model_artifact_path folder 
+    mlflow.keras.save_model(model_, model_artifact_path)
     
-     
-
     print("----mlflow.get_artifact_uri() : ",mlflow.get_artifact_uri())
     history_df = pd.DataFrame(history.history)
     history_df.to_csv(os.path.join(experiment_artifact_path,"history.csv" ),index=False)
     mlflow.log_artifacts(artifact_path)
-  
+    mlflow.keras.autolog(registered_model_name="autolog")
 
 
 
