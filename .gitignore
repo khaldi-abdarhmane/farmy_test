@@ -1,5 +1,7 @@
-/PlantVillage
-PlantVillage.tar.gz
-Anaconda3-2020.02-Linux-x86_64.sh
-my_model.h5
-small_dataset
+/ml_pipelines/plant_disease_pipeline/data/
+/ml_pipelines/plant_disease_pipeline/train/model/model2.h5
+/ml_pipelines/plant_disease_pipeline/train/history/history.csv
+/ml_pipelines/plant_disease_pipeline/mlruns
+/results
+/data
+/src/utils/__pycache__/ 
