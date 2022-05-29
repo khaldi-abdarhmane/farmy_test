@@ -1,0 +1,4 @@
+[core]
+    remote = storagekhaldi
+['remote "storagekhaldi"']
+    url = s3://test-farmy/data
