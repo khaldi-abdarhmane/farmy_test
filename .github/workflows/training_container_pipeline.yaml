@@ -6,7 +6,7 @@ name: Deploy image training container to ECR
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ khaldi_Deploy_image_training_container_to_ECR ]
+    branches: [ khaldi_actions ]
 
 jobs:
   
