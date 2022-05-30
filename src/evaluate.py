@@ -21,12 +21,12 @@ Path("./../../results/evaluate/evaluate_csv/").mkdir(parents=True,exist_ok=True)
 model_path = sys.argv[1]
 history_df_path = sys.argv[2]
 validation_path = sys.argv[3]
-output1 = sys.argv[4]
+classification_report_path = sys.argv[4]
 
 train_path = sys.argv[5]
 
-output2 = sys.argv[6]
-output3 = sys.argv[7]
+confusion_matrix_path = sys.argv[6]
+confusion_matrix_img_path = sys.argv[7]
 observing_accuracy_path = sys.argv[8]
 
 
@@ -44,8 +44,8 @@ generatorobjet=generator(rescale=params.rescale,
 
  
 observing_accuracy(df=df,savepath= observing_accuracy_path)
-classification_report_fct(validation_generator= generatorobjet.validation_generator,model=model,classification_report_path= output1,conf_matrix_path=output2)
-confusion_matrix_plt(conf_matrix_path=output2,output=output3)
+classification_report_fct(validation_generator= generatorobjet.validation_generator,model=model,classification_report_path=classification_report_path ,conf_matrix_path=confusion_matrix_path)
+confusion_matrix_plt(conf_matrix_path=confusion_matrix_path,output=confusion_matrix_img_path)
 
 
 """

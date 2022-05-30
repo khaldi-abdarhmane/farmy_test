@@ -8,9 +8,7 @@ from tensorflow.keras.layers import Input,GlobalAveragePooling2D,Dropout,Dense
 import sys
 import yaml
 from utils.utils import Params
-
 from utils.train.arch_model import Arch_model
-
 from utils.utils import generator
 import os
 import pandas as pd
@@ -20,6 +18,7 @@ import mlflow.tensorflow
 import shutil
 
 from pathlib import Path
+
 # create results/training folder to stock training artifact
 Path("./../../results/training").mkdir(parents=True,exist_ok=True)
 Path("./../../results/training/history").mkdir(parents=True,exist_ok=True)

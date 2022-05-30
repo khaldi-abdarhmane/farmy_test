@@ -1,0 +1,4 @@
+
+git clone --single-branch --branch khaldi_refactor_class_to_one_file https://github.com/Tahedi1/farmy_mlops_cv.git
+dvc pull data
+git pull origin khaldi_refactor_class_to_one_file

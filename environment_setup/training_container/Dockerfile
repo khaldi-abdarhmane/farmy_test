@@ -11,4 +11,7 @@ RUN conda create -n myenv
 RUN conda install --file requirements.txt
 RUN conda install -c conda-forge mlflow
 RUN rm -rf requirements.txt
-# COPY . .
+# COPY . . 
+RUN conda deactivate
+RUN conda activate myenv
+RUN conda install boto3
