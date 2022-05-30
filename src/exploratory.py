@@ -18,7 +18,7 @@ output = sys.argv[3]
 
 
 
-
+Path("./../../results//exploratory/exploratory_img/plots/").mkdir(parents=True,exist_ok=True)
 print("------output ", output)
 """
 result_path=  "./../../results/"
