@@ -15,3 +15,5 @@ RUN rm -rf requirements.txt
 RUN conda deactivate
 RUN conda activate myenv
 RUN conda install boto3
+
+CMD [ "git clone --single-branch --branch khaldi_refactor_class_to_one_file https://github.com/khaldi-abdarhmane/farmy_test.git" ,"dvc pull data"]
