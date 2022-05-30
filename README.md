@@ -40,3 +40,4 @@ Notes:
 
 * the folder of the datasets is automaticly created in .dvc folder. so we delete the folder data from the structure
 * results folder is not usesfull. we will separate the testing runs in separate group using mlflow  
+*dsdsdsds
