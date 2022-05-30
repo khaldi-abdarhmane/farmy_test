@@ -14,18 +14,12 @@ from pathlib import Path
 
 train_path = sys.argv[1]
 validation_path = sys.argv[2]
-output = sys.argv[3]
+plot_path = sys.argv[3]
 
 
 
-
-print("------output ", output)
-"""
-result_path=  "./../../results/"
-
-if Path(result_path).exists():
-  shutil.rmtree(result_path)
-"""   
+ 
+Path(plot_path).mkdir(parents=True,exist_ok=True)
 
 
 lists = os.listdir(train_path)
@@ -46,8 +40,8 @@ with plt.style.context('ggplot'):
   train_df['Crops'].value_counts().plot(kind='pie', title='Validation data',ax = axes[0],subplots=True)
   train_df['Diseases'].value_counts().plot(kind='bar', color='C1',title='Validation data',ax = axes[1],subplots=True)
  
-#plt.savefig(output.__str__()+"/train.png")  
-plt.savefig(os.path.join(output,"train.png")) 
+#plt.savefig(plot_path.__str__()+"/train.png")  
+plt.savefig(os.path.join(plot_path,"train.png")) 
 
 lists = os.listdir(validation_path)
 diseases = []
@@ -67,5 +61,5 @@ with plt.style.context('ggplot'):
   validation_df['Crops'].value_counts().plot(kind='pie', title='Validation data',ax = axes[0],subplots=True)
   validation_df['Diseases'].value_counts().plot(kind='bar', color='C1',title='Validation data',ax = axes[1],subplots=True)
    
-plt.savefig(os.path.join(output,"valid.png"))  
-#plt.savefig(output.__str__()+"/valid.png")  
+plt.savefig(os.path.join(plot_path,"valid.png"))  
+#plt.savefig(plot_path.__str__()+"/valid.png")  
