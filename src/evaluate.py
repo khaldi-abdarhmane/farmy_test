@@ -1,10 +1,10 @@
-from utils.Loadingmodel_data import modelLoad,historyLoad 
+from utils.utils import modelLoad,historyLoad 
 import sys
-from utils.evaluate.observing_accuracy import observing_accuracy
-from utils.evaluate.classification_report import classification_report_fct
-from utils.generator import generator
+from utils.utils import observing_accuracy
+from utils.utils import classification_report_fct
+from utils.utils import generator
 from pathlib import Path
-from utils.params_fct import params_fct
+from utils.utils import params_fct
 from utils.evaluate.confusion_matrix_plt import confusion_matrix_plt
 import mlflow
 

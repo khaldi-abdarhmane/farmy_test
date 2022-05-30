@@ -1,17 +1,17 @@
 from distutils.command.upload import upload
 import tensorflow as tf
-from utils.params_fct import params_fct
+from utils.utils import params_fct
 print(tf.__version__)
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras.models import Model,load_model
 from tensorflow.keras.layers import Input,GlobalAveragePooling2D,Dropout,Dense
 import sys
 import yaml
-from utils.params import Params
+from utils.utils import Params
 
 from utils.train.arch_model import Arch_model
 
-from utils.generator import generator
+from utils.utils import generator
 import os
 import pandas as pd
 import mlflow
