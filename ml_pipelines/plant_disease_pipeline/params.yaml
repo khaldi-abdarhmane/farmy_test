@@ -11,5 +11,5 @@ train:
   learning_rate: 0.01
   momentum: 0.9
   nbr_epoch: 1
-  mlflow_server_url:  "http://ec2-54-160-246-226.compute-1.amazonaws.com:8080/" 
+  mlflow_server_url:  "http://ec2-3-226-211-51.compute-1.amazonaws.com:8080/" 
   experiment_name: "testing"
