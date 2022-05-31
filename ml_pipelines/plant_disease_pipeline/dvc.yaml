@@ -9,7 +9,7 @@ stages:
     - ./../../results/exploratory/exploratory_img/plots/train.png
     - ./../../results/exploratory/exploratory_img/plots/valid.png
   train:
-    cmd: python ./../../src/train.py ./../../data/small_dataset/train/ ./../../data/small_dataset/val/ ./../../results/training/model2.h5 ./../../results/training/history/history.csv
+    cmd: python ./../../src/train.py ./../../data/small_dataset/train/ ./../../data/small_dataset/val/ ./../../results/training/keras ./../../results/training/history/history.csv ./../../results/run_info.json
     deps:
     - ./../../src/train.py 
     - ./../../data/small_dataset/train/
@@ -20,18 +20,20 @@ stages:
     - train.momentum
     - train.nbr_epoch
     outs:
-    - ./../../results/training/model2.h5
+    - ./../../results/training/keras
     - ./../../results/training/history/history.csv
+    - ./../../results/run_info.json
 
 
   evaluate:
-    cmd: python ./../../src/evaluate.py ./../../results/training/model2.h5 ./../../results/training/history/history.csv ./../../data/small_dataset/val/ ./../../results/evaluate/evaluate_csv/classification_report.csv ./../../data/small_dataset/train/ ./../../results/evaluate/evaluate_csv/confusion_matrix.csv ./../../results/evaluate/evaluate_plt/confusion_matrix_img.png ./../../results/evaluate/evaluate_plt/observing_accuracy_img.png
+    cmd: python ./../../src/evaluate.py ./../../results/training/keras ./../../results/training/history/history.csv ./../../data/small_dataset/val/ ./../../results/evaluate/evaluate_csv/classification_report.csv ./../../data/small_dataset/train/ ./../../results/evaluate/evaluate_csv/confusion_matrix.csv ./../../results/evaluate/evaluate_plt/confusion_matrix_img.png ./../../results/evaluate/evaluate_plt/observing_accuracy_img.png ./../../results/exploratory/exploratory_img/plots/
     deps:
-    - ./../../results/training/model2.h5
+    - ./../../results/training/keras
     - ./../../results/training/history/history.csv
     - ./../../data/small_dataset/train
     - ./../../data/small_dataset/val
     - ./../../src/evaluate.py
+    
     outs:
      - ./../../results/evaluate/evaluate_csv/classification_report.csv
      - ./../../results/evaluate/evaluate_csv/confusion_matrix.csv
