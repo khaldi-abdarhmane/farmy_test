@@ -1,0 +1,30 @@
+name: data
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main , develop ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
+jobs:
+
+  container:
+    runs-on: self-hosted
+    container: 
+     image: khaldi22/imag3:latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - run: |
+          echo This job does specify a container.
+          echo It runs in the container instead of the VM.
+          ls -la
+          ls -la
+        name: Run in container

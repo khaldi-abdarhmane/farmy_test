@@ -18,19 +18,10 @@ plot_path = sys.argv[3]
 
 
 
-<<<<<<< HEAD
-Path("./../../results//exploratory/exploratory_img/plots/").mkdir(parents=True,exist_ok=True)
-print("------output ", output)
-"""
-result_path=  "./../../results/"
 
-if Path(result_path).exists():
-  shutil.rmtree(result_path)
-"""   
-=======
  
 Path(plot_path).mkdir(parents=True,exist_ok=True)
->>>>>>> b26fe8b5bb509ec20bfcd0b6905583624904bf86
+
 
 
 lists = os.listdir(train_path)
