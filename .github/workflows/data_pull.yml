@@ -24,6 +24,15 @@ jobs:
       volumes:
         - my_docker_volume:/volume_mount
       options: --cpus 1
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - run: |
+          echo This job does specify a container.
+          echo It runs in the container instead of the VM.
+          ls -la
+          ls -la
+      
 
         # container:
         #   runs-on: self-hosted
