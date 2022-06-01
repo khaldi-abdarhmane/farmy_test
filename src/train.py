@@ -16,7 +16,7 @@ import mlflow
 import mlflow.keras
 import mlflow.tensorflow
 import shutil
-
+import json
 from pathlib import Path
 
 # create results/training folder to stock training artifact
@@ -31,7 +31,7 @@ print("[params]:",params)
 print("[params_dict]:",params_dict)
 upload_artifact=True
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 6:
     sys.stderr.write("Arguments error. Usage:\n")
     sys.stderr.write("\tpython train.py features model\n")
     sys.exit(1)
@@ -58,40 +58,69 @@ arch_model=Arch_model(base_model= base_model_1,class_number=generatorobjet.class
 model_=arch_model.model
 model_.compile(optimizer=params.optimizer, loss=params.loss, metrics= params.metrics )
 
+
+
 mlflow.set_tracking_uri( mlflow_server_url)
 mlflow.set_experiment(experiment_name)
-
 print("[ output model ]\n",output_model)
-with mlflow.start_run() as run:
-    experiment_artifact_path=os.path.join(artifact_path ,"training") ####
-    model_artifact_path=os.path.join(experiment_artifact_path,"model_artifacts")
-    print("----mlflow.get_artifact_uri() : ",mlflow.get_artifact_uri())
 
-    
+with mlflow.start_run() as run:
+
+    experiment_artifact_path=os.path.join(artifact_path ,"training") ####
+    model_artifact_path=os.path.join(experiment_artifact_path,"keras")
+
+    print("----mlflow.get_artifact_uri() : ",mlflow.get_artifact_uri())
+ 
+
+    #model_.save(os.path.join(output_model))# temporrary
+    """
+    ### temp init
+    model_ =mlflow.keras.load_model(model_artifact_path)
+    ####
+    """
+
     history=model_.fit(generatorobjet.train_generator,
                    epochs= params.nbr_epoch,
                    validation_data=generatorobjet.validation_generator)
     history_df = pd.DataFrame(history.history)
-#    history_df = pd.DataFrame(["hhh"])
-
     history_path= os.path.join(experiment_artifact_path,"history/history.csv" )
-    history_df.to_csv(history_path ,index=False)
-                 
-    model_.save(os.path.join(output_model))
-    """
-            # temporary
-    from utils.Loadingmodel_data import modelLoad,historyLoad 
-    model_=modelLoad("./../../results/training/model2.h5")
-    #----
-    """
+    history_df.to_csv(history_path ,index=False)# save history file
+    
+    #history_path= os.path.join(experiment_artifact_path,"history/history.csv" ) # remove
 
-    if Path(model_artifact_path).exists():
-        shutil.rmtree(model_artifact_path) # remove  model_artifact_path folder 
+    if Path(model_artifact_path).exists():  # remove  model_artifact_path folder  ,else he give exception
+        shutil.rmtree(model_artifact_path)
+    mlflow.keras.save_model(model_, model_artifact_path)
 
     mlflow.log_params(params_dict)
     mlflow.log_artifact(history_path)
     mlflow.keras.log_model(model_,"keras")
+ 
 
+    #mlflow.log_artifact("./../../results/training/keras")
+
+
+
+run_id= run.info.run_id
+experiment_id =run.info.experiment_id
+experiment_name= mlflow.get_experiment( experiment_id).name  
+run_info= {
+    "experiment_id" : experiment_id,
+    "experiment_name": experiment_name,
+    "run_id": run_id,
+    "mlflow_server_url": mlflow.get_tracking_uri(),
+}
+
+with open( os.path.join( artifact_path , "run_info.json"), "w" ) as run_info_file:
+    run_info_file.write(json.dumps(run_info) )
+
+
+"""
+            # temporary
+    from utils.Loadingmodel_data import modelLoad,historyLoad 
+    model_=modelLoad("./../../results/training/model2.h5")
+    #----
+"""
 
 
 
