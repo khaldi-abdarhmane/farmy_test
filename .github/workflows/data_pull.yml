@@ -20,7 +20,7 @@ jobs:
     container: 
      image: khaldi22/imag3:latest
      volumes:
-      - ./dataremote:/home/khaldi/dataremote
+      - .:/home/khaldi/dataremote
      
     steps:
       - name: Check out code
