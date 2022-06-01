@@ -19,6 +19,9 @@ jobs:
     runs-on: self-hosted
     container: 
      image: khaldi22/imag3:latest
+     volumes:
+      - ./dataremote:/home/khaldi/dataremote
+     
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -27,4 +30,5 @@ jobs:
           echo It runs in the container instead of the VM.
           ls -la
           ls -la
+          
         name: Run in container
