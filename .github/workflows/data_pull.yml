@@ -31,6 +31,15 @@ jobs:
           ls -la
           ls -la
           dvc remote list
+          dvc remote default
+          dvc remote default remotelocal
+          dvc pull data
+          dvc remote default s3://test-farmy/data
+          dvc remote default
+          dvc pull data
+          dvc remote default remotelocal
+          dvc push data
+          ls -la
           ls -la /home/khaldi/dataremote
 
           
