@@ -30,6 +30,8 @@ jobs:
           echo It runs in the container instead of the VM.
           ls -la
           ls -la
+          dvc remote list
           ls -la /home/khaldi/dataremote
+
           
         name: Run in container
