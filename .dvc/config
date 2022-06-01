@@ -1,6 +1,8 @@
 [core]
-    remote = storage12
+    remote = remotelocal
 ['remote "storagekhaldi"']
     url = s3://test-farmy/data
 ['remote "storage12"']
     url = gdrive://1KoR9PvXQYNkl10Ldb0THSmuR0MFsVC7P
+['remote "remotelocal"']
+    url = /home/khaldi/dataremote/data
