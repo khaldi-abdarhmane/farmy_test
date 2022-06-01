@@ -34,6 +34,9 @@ jobs:
           dvc remote default
           dvc remote default remotelocal
           dvc pull data
+          cd ml_pipelines/
+          cd plant_disease_pipeline/
+          dvc repro
 
           ls -la
           
