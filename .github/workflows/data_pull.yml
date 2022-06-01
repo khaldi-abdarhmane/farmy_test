@@ -20,7 +20,7 @@ jobs:
     container: 
      image: khaldi22/imag3:latest
      volumes:
-        - /home/khaldi/dataremote:/volume_mount
+        - /home/khaldi/dataremote:/home/khaldi/dataremote
      
     steps:
       - name: Check out code
@@ -30,6 +30,6 @@ jobs:
           echo It runs in the container instead of the VM.
           ls -la
           ls -la
-          ls -la /volume_mount
+          ls -la /home/khaldi/dataremote
           
         name: Run in container
