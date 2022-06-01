@@ -14,21 +14,30 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
 jobs:
+  my_job:
+    container:
+      image: node:14.16
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1
 
-  container:
-    runs-on: self-hosted
-    container: 
-     image: khaldi22/imag3:latest
-     volumes:
-      - .:/home/khaldi/dataremote
-     
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - run: |
-          echo This job does specify a container.
-          echo It runs in the container instead of the VM.
-          ls -la
-          ls -la
+        # container:
+        #   runs-on: self-hosted
+        #   container: 
+        #   image: khaldi22/imag3:latest
+        #   options: -v./dataremote:/home/khaldi/dataremote
           
-        name: Run in container
+        #   steps:
+        #     - name: Check out code
+        #       uses: actions/checkout@v2
+        #     - run: |
+        #         echo This job does specify a container.
+        #         echo It runs in the container instead of the VM.
+        #         ls -la
+        #         ls -la
+                
+        #       name: Run in container
